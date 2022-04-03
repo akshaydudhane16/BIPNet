@@ -28,4 +28,20 @@ See [install.yml](install.yml) for the installation of dependencies required to 
 ```
 conda env create -f install.yml
 ```
-# BIPNet
+
+## Citation
+If you use Restormer, please consider citing:
+    
+    @inproceedings{dudhane2021burst,
+            title={Burst Image Restoration and Enhancement},
+            author={Akshay Dudhane and Syed Waqas Zamir and Salman Khan and Fahad Shahbaz Khan and Ming-Hsuan Yang},
+            booktitle={CVPR},
+            year={2022}
+          }
+
+
+## Contact
+Should you have any question, please contact akshay.dudhane@mbzuai.ac.ae
+
+
+**Acknowledgment:** This code is based on the [NTIRE21_BURSTSR](https://github.com/goutamgmb/NTIRE21_BURSTSR) toolbox.
