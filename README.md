@@ -8,7 +8,7 @@
 
 #### News
 - **April 3, 2022:** Training and Testing codes with pre-trained models are released :fire:
-- **March 29, 2022:** Restormer is selected for an ORAL presentation at CVPR 2022 :dizzy:
+- **March 29, 2022:** BIPNet is selected for an ORAL presentation at CVPR 2022 :dizzy:
 - **March 3, 2022:** Paper accepted at CVPR 2022 :tada: 
 
 <hr />
