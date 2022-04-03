@@ -30,7 +30,7 @@ conda env create -f install.yml
 ```
 
 ## Citation
-If you use Restormer, please consider citing:
+If you use BIPNet, please consider citing:
     
     @inproceedings{dudhane2021burst,
             title={Burst Image Restoration and Enhancement},
