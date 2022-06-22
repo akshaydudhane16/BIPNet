@@ -8,7 +8,7 @@
 
 #### News
 - **June 22, 2022:** BIPNet oral presentation is available [here](https://mbzuaiac-my.sharepoint.com/:v:/g/personal/akshay_dudhane_mbzuai_ac_ae/EaZQu17BqjVEuSBSPdxZ8hEB5a-HH4HcD34PXm7PhP3SYw?e=uRGd16) :fire:
-- **June 21, 2022:** BIPNet was best paper finalist at CVPR 2022 :fire:
+- **June 21, 2022:** BIPNet was best paper finalist at CVPR 2022
 - **April 3, 2022:** Training and Testing codes with pre-trained models are released :fire:
 - **March 29, 2022:** BIPNet is selected for an ORAL presentation at CVPR 2022 :dizzy:
 - **March 3, 2022:** Paper accepted at CVPR 2022 :tada: 
