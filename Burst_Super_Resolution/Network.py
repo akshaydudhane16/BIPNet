@@ -11,6 +11,10 @@ import pytorch_lightning as pl
 from torchvision.ops import DeformConv2d
 
 from pytorch_lightning import seed_everything
+
+from utils.metrics import PSNR
+psnr_fn = PSNR(boundary_ignore=40)
+
 seed_everything(13)
 
 
@@ -207,7 +211,10 @@ class AGU(nn.Module):
 class BIPNet(pl.LightningModule):
     def __init__(self, num_features=64, burst_size=14, reduction=8, bias=False):
         super(BIPNet, self).__init__()        
-
+        
+        self.train_loss = nn.L1Loss()
+        self.valid_psnr = PSNR(boundary_ignore=40)
+        
         self.conv1 = nn.Sequential(nn.Conv2d(4, num_features, kernel_size=3, padding=1, bias=bias))
 
         ####### Edge Boosting Feature Alignment
@@ -341,3 +348,31 @@ class BIPNet(pl.LightningModule):
         burst_feat = self.conv3(burst_feat)                     # (1, 3, 4H, 4W) 
         
         return burst_feat
+    
+    def training_step(self, train_batch, batch_idx):
+        x, y, flow_vectors, meta_info = train_batch
+        pred = self.forward(x)
+        pred = pred.clamp(0.0, 1.0)
+        loss = self.train_loss(pred, y)
+        self.log('train_loss', loss, on_step=True, on_epoch=True)
+        return loss
+
+    def validation_step(self, val_batch, batch_idx):
+        x, y, flow_vectors, meta_info = val_batch
+        pred = self.forward(x)
+        pred = pred.clamp(0.0, 1.0)
+        PSNR = self.valid_psnr(pred, y)
+        return PSNR
+
+    def validation_epoch_end(self, outs):
+        # outs is a list of whatever you returned in `validation_step`
+        PSNR = torch.stack(outs).mean()
+        self.log('val_psnr', PSNR, on_step=False, on_epoch=True, prog_bar=True)
+
+    def configure_optimizers(self):        
+        optimizer = torch.optim.AdamW(self.parameters(), lr=3e-4)
+        lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, 100, eta_min=1e-6)            
+        return [optimizer], [lr_scheduler]
+
+    def optimizer_zero_grad(self, epoch, batch_idx, optimizer, optimizer_idx):
+        optimizer.zero_grad(set_to_none=True)
