@@ -348,6 +348,8 @@ class AlignedSSIM(nn.Module):
         return ssim
 
     def forward(self, pred, gt, burst_input):
+
+        pred, gt, burst_input = make_patches(pred, gt, burst_input)
         ssim_all = [self.ssim(p.unsqueeze(0), g.unsqueeze(0), bi.unsqueeze(0)) for p, g, bi in zip(pred, gt, burst_input)]
         ssim = sum(ssim_all) / len(ssim_all)
         return ssim
@@ -371,6 +373,8 @@ class AlignedLPIPS(nn.Module):
         return LPIPS
 
     def forward(self, pred, gt, burst_input):
+
+        pred, gt, burst_input = make_patches(pred, gt, burst_input)
         lpips_all = [self.lpips(p.unsqueeze(0), g.unsqueeze(0), bi.unsqueeze(0)) for p, g, bi in zip(pred, gt, burst_input)]
         lpips = sum(lpips_all) / len(lpips_all)
         return lpips
